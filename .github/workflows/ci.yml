@@ -1,0 +1,17 @@
+---
+jobs:
+  autogreen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Update Code
+        run: |
+          git config --local user.email "zefzhou44@gmail.com" git config --local user.name "zefzhou44" git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} git pull --rebase git commit --allow-empty -m "update" git push
+name: ci
+'on':
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/5 * * * *'
